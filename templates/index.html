@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main class="main">
+    <!-- 统计信息 -->
+    <section class="stats">
+        <div class="stat-card">
+            <span class="stat-number" id="total-count">0</span>
+            <span class="stat-label">总任务数</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number" id="completed-count">0</span>
+            <span class="stat-label">已完成</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number" id="pending-count">0</span>
+            <span class="stat-label">待处理</span>
+        </div>
+    </section>
+
+    <!-- 添加任务表单 -->
+    <section class="add-todo-section">
+        <form id="add-todo-form" class="add-todo-form">
+            <input 
+                type="text" 
+                id="todo-title" 
+                placeholder="输入新任务..." 
+                class="input-field"
+                required
+            >
+            <textarea 
+                id="todo-description" 
+                placeholder="任务描述（可选）" 
+                class="textarea-field"
+                rows="2"
+            ></textarea>
+            <div class="form-actions">
+                <select id="todo-priority" class="priority-select">
+                    <option value="low">低优先级</option>
+                    <option value="medium" selected>中优先级</option>
+                    <option value="high">高优先级</option>
+                </select>
+                <button type="submit" class="btn btn-primary">➕ 添加任务</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- 筛选和排序 -->
+    <section class="filter-section">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">全部</button>
+            <button class="filter-btn" data-filter="pending">待处理</button>
+            <button class="filter-btn" data-filter="completed">已完成</button>
+        </div>
+        <div class="sort-buttons">
+            <button class="sort-btn active" data-sort="newest">最新</button>
+            <button class="sort-btn" data-sort="priority">优先级</button>
+        </div>
+    </section>
+
+    <!-- 任务列表 -->
+    <section class="todos-section">
+        <div id="todos-list" class="todos-list">
+            <p class="empty-message">暂无任务，添加一个开始吧！</p>
+        </div>
+    </section>
+</main>
+{% endblock %}
