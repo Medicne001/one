@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>SmartWealth Agent Demo</title></head>
+<body style="font-family: Arial, sans-serif; padding: 20px">
+  <h1>SmartWealth Agent Demo</h1>
+  <p>This demo triggers the agent which orchestrates skills via LangGraph using MCP policy.</p>
+
+  <button id="run">Run Demo (Buy House, 5 years)</button>
+  <pre id="out" style="white-space: pre-wrap; border:1px solid #ccc; padding:10px; margin-top:10px;"></pre>
+
+<script>
+document.getElementById('run').onclick = async () => {
+  document.getElementById('out').textContent = "Running...";
+  const profile = {
+    name: "张三",
+    age: 35,
+    goal: "5年内购房首付",
+    horizon_years: 5,
+    risk: "Medium",
+    assets: {cash:50000, stocks:200000, bonds:50000}
+  };
+  try {
+    const r = await fetch('http://localhost:8001/run_demo', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(profile)
+    });
+    const j = await r.json();
+    document.getElementById('out').textContent = JSON.stringify(j, null, 2);
+    // open pdf_html preview in new window
+    if (j.pdf_html) {
+      const w = window.open("", "_blank");
+      w.document.write(j.pdf_html);
+      w.document.title = "Plan Preview";
+    }
+  } catch (e) {
+    document.getElementById('out').textContent = "Error: " + e;
+  }
+};
+</script>
+</body>
+</html>
